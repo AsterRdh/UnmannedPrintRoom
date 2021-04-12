@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aster.bcu.printroom.mapper.PrActivesDao">
+  <resultMap id="BaseResultMap" type="com.aster.bcu.printroom.entity.PrActives">
+    <id column="pk_act" jdbcType="VARCHAR" property="pkAct" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="src" jdbcType="VARCHAR" property="src" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="rule" jdbcType="VARCHAR" property="rule" />
+    <result column="dr" jdbcType="INTEGER" property="dr" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="approver" jdbcType="VARCHAR" property="approver" />
+    <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_act, `name`, code, src, info, `rule`, dr, creator, create_time, approver, approval_time, 
+    start_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pr_actives
+    where pk_act = #{pkAct,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pr_actives
+    where pk_act = #{pkAct,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="pk_act" keyProperty="pkAct" parameterType="com.aster.bcu.printroom.entity.PrActives" useGeneratedKeys="true">
+    insert into pr_actives (`name`, code, src, 
+      info, `rule`, dr, creator, 
+      create_time, approver, approval_time, 
+      start_date, end_date)
+    values (#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{src,jdbcType=VARCHAR}, 
+      #{info,jdbcType=VARCHAR}, #{rule,jdbcType=VARCHAR}, #{dr,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{approver,jdbcType=VARCHAR}, #{approvalTime,jdbcType=TIMESTAMP}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="pk_act" keyProperty="pkAct" parameterType="com.aster.bcu.printroom.entity.PrActives" useGeneratedKeys="true">
+    insert into pr_actives
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="src != null">
+        src,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="rule != null">
+        `rule`,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="approver != null">
+        approver,
+      </if>
+      <if test="approvalTime != null">
+        approval_time,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null">
+        #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null">
+        #{rule,jdbcType=VARCHAR},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="approver != null">
+        #{approver,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalTime != null">
+        #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aster.bcu.printroom.entity.PrActives">
+    update pr_actives
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null">
+        src = #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null">
+        `rule` = #{rule,jdbcType=VARCHAR},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="approver != null">
+        approver = #{approver,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalTime != null">
+        approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_act = #{pkAct,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aster.bcu.printroom.entity.PrActives">
+    update pr_actives
+    set `name` = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      src = #{src,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      `rule` = #{rule,jdbcType=VARCHAR},
+      dr = #{dr,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      approver = #{approver,jdbcType=VARCHAR},
+      approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP}
+    where pk_act = #{pkAct,jdbcType=VARCHAR}
+  </update>
+</mapper>

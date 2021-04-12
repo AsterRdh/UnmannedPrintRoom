@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aster.bcu.printroom.mapper.PrShopDao">
+  <resultMap id="BaseResultMap" type="com.aster.bcu.printroom.entity.PrShop">
+    <id column="pk_item" jdbcType="VARCHAR" property="pkItem" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="dr" jdbcType="VARCHAR" property="dr" />
+    <result column="ts" jdbcType="TIMESTAMP" property="ts" />
+    <result column="src" jdbcType="VARCHAR" property="src" />
+    <result column="use_rule" jdbcType="VARCHAR" property="useRule" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_item, `name`, code, price, info, num, dr, ts, src, use_rule
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pr_shop
+    where pk_item = #{pkItem,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pr_shop
+    where pk_item = #{pkItem,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="pk_item" keyProperty="pkItem" parameterType="com.aster.bcu.printroom.entity.PrShop" useGeneratedKeys="true">
+    insert into pr_shop (`name`, code, price, 
+      info, num, dr, ts, 
+      src, use_rule)
+    values (#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{info,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{dr,jdbcType=VARCHAR}, #{ts,jdbcType=TIMESTAMP}, 
+      #{src,jdbcType=VARCHAR}, #{useRule,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="pk_item" keyProperty="pkItem" parameterType="com.aster.bcu.printroom.entity.PrShop" useGeneratedKeys="true">
+    insert into pr_shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+      <if test="ts != null">
+        ts,
+      </if>
+      <if test="src != null">
+        src,
+      </if>
+      <if test="useRule != null">
+        use_rule,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=VARCHAR},
+      </if>
+      <if test="ts != null">
+        #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="src != null">
+        #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="useRule != null">
+        #{useRule,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aster.bcu.printroom.entity.PrShop">
+    update pr_shop
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=VARCHAR},
+      </if>
+      <if test="ts != null">
+        ts = #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="src != null">
+        src = #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="useRule != null">
+        use_rule = #{useRule,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_item = #{pkItem,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aster.bcu.printroom.entity.PrShop">
+    update pr_shop
+    set `name` = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      info = #{info,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      dr = #{dr,jdbcType=VARCHAR},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      src = #{src,jdbcType=VARCHAR},
+      use_rule = #{useRule,jdbcType=VARCHAR}
+    where pk_item = #{pkItem,jdbcType=VARCHAR}
+  </update>
+</mapper>

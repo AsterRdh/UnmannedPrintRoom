@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aster.bcu.printroom.mapper.PrBillsMapper">
+  <resultMap id="BaseResultMap" type="com.aster.bcu.printroom.entity.PrBills">
+    <id column="pk_bill" jdbcType="VARCHAR" property="pkBill" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="dr" jdbcType="INTEGER" property="dr" />
+    <result column="pk_printer" jdbcType="VARCHAR" property="pkPrinter" />
+    <result column="pk_user" jdbcType="VARCHAR" property="pkUser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_bill, code, `name`, amount, info, `type`, `state`, start_date, end_date, dr, pk_printer , pk_user
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pr_bills
+    where pk_bill = #{pkBill,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pr_bills
+    where dr=0
+  </select>
+
+  <select id="selectAllByUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pr_bills
+    where dr=0 and pk_user= #{pkUser,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pr_bills
+    where pk_bill = #{pkBill,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="pk_bill" keyProperty="pkBill" parameterType="com.aster.bcu.printroom.entity.PrBills" useGeneratedKeys="false">
+    insert into pr_bills (pk_bill,code, `name`, amount,
+      info, `type`, `state`, 
+      start_date, end_date, dr, 
+      pk_printer,pk_user)
+    values (#{pkBill,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE},
+      #{info,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{dr,jdbcType=INTEGER}, 
+      #{pkPrinter,jdbcType=VARCHAR},#{pkUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="pk_bill" keyProperty="pkBill" parameterType="com.aster.bcu.printroom.entity.PrBills" useGeneratedKeys="true">
+    insert into pr_bills
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+      <if test="pkPrinter != null">
+        pk_printer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=INTEGER},
+      </if>
+      <if test="pkPrinter != null">
+        #{pkPrinter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aster.bcu.printroom.entity.PrBills">
+    update pr_bills
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=INTEGER},
+      </if>
+      <if test="pkPrinter != null">
+        pk_printer = #{pkPrinter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_bill = #{pkBill,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aster.bcu.printroom.entity.PrBills">
+    update pr_bills
+    set code = #{code,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DOUBLE},
+      info = #{info,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=INTEGER},
+      pk_printer = #{pkPrinter,jdbcType=VARCHAR}
+    where pk_bill = #{pkBill,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getAmount"  parameterType="java.lang.String" resultType="java.math.BigDecimal">
+    select amount from pr_bills where pk_bill=#{pkBill,jdbcType=VARCHAR} and dr = 0;
+  </select>
+  <update id="updateStateByPrimaryKey" parameterType="java.lang.String">
+    update pr_bills set state=#{state,jdbcType=VARCHAR} where dr = 0 and pk_bill=#{pkBill,jdbcType=VARCHAR}
+  </update>
+</mapper>
+
+

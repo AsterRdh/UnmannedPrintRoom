@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aster.bcu.printroom.mapper.PrUsersDao">
+  <resultMap id="BaseResultMap" type="com.aster.bcu.printroom.entity.PrUsers">
+    <id column="pk_user" jdbcType="INTEGER" property="pkUser" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="userphone" jdbcType="VARCHAR" property="userphone" />
+    <result column="user_minipro" jdbcType="VARCHAR" property="userMinipro" />
+    <result column="user_seed" jdbcType="INTEGER" property="userSeed" />
+    <result column="ban" jdbcType="CHAR" property="ban" />
+    <result column="ban_info" jdbcType="VARCHAR" property="banInfo" />
+    <result column="dr" jdbcType="CHAR" property="dr" />
+  </resultMap>
+
+  <parameterMap id="BaseLogMap" type="com.aster.bcu.printroom.entity.PrUsers">
+    <parameter  property="username" javaType="String"/>
+    <parameter  property="userPassword" javaType="String"/>
+  </parameterMap>
+
+
+  <sql id="Base_Column_List">
+    pk_user, username, user_password, userphone, user_minipro, user_seed, ban, ban_info, 
+    dr
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pr_users
+    where pk_user = #{pkUser,jdbcType=INTEGER} and dr='0'
+  </select>
+
+  <select id="selectByUserInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pr_users
+    where user_minipro=#{openId,jdbcType=VARCHAR} and dr='0'
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pr_users
+    where pk_user = #{pkUser,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="pk_user" keyProperty="pkUser" parameterType="com.aster.bcu.printroom.entity.PrUsers" useGeneratedKeys="true">
+    insert into pr_users (username, user_password, userphone, 
+      user_minipro, user_seed, ban, 
+      ban_info, dr)
+    values (#{username,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR}, 
+      #{userMinipro,jdbcType=VARCHAR}, #{userSeed,jdbcType=INTEGER}, #{ban,jdbcType=CHAR}, 
+      #{banInfo,jdbcType=VARCHAR}, #{dr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="pk_user" keyProperty="pkUser" parameterType="com.aster.bcu.printroom.entity.PrUsers" useGeneratedKeys="true">
+    insert into pr_users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="userPassword != null">
+        user_password,
+      </if>
+      <if test="userphone != null">
+        userphone,
+      </if>
+      <if test="userMinipro != null">
+        user_minipro,
+      </if>
+      <if test="userSeed != null">
+        user_seed,
+      </if>
+      <if test="ban != null">
+        ban,
+      </if>
+      <if test="banInfo != null">
+        ban_info,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null">
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="userMinipro != null">
+        #{userMinipro,jdbcType=VARCHAR},
+      </if>
+      <if test="userSeed != null">
+        #{userSeed,jdbcType=INTEGER},
+      </if>
+      <if test="ban != null">
+        #{ban,jdbcType=CHAR},
+      </if>
+      <if test="banInfo != null">
+        #{banInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aster.bcu.printroom.entity.PrUsers">
+    update pr_users
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null">
+        userphone = #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="userMinipro != null">
+        user_minipro = #{userMinipro,jdbcType=VARCHAR},
+      </if>
+      <if test="userSeed != null">
+        user_seed = #{userSeed,jdbcType=INTEGER},
+      </if>
+      <if test="ban != null">
+        ban = #{ban,jdbcType=CHAR},
+      </if>
+      <if test="banInfo != null">
+        ban_info = #{banInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=CHAR},
+      </if>
+    </set>
+    where pk_user = #{pkUser,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aster.bcu.printroom.entity.PrUsers">
+    update pr_users
+    set username = #{username,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      userphone = #{userphone,jdbcType=VARCHAR},
+      user_minipro = #{userMinipro,jdbcType=VARCHAR},
+      user_seed = #{userSeed,jdbcType=INTEGER},
+      ban = #{ban,jdbcType=CHAR},
+      ban_info = #{banInfo,jdbcType=VARCHAR},
+      dr = #{dr,jdbcType=CHAR}
+    where pk_user = #{pkUser,jdbcType=INTEGER}
+  </update>
+</mapper>

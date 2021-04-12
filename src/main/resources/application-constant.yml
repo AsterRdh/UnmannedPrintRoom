@@ -1,0 +1,18 @@
+appid: wx95838c1839a77eef
+secret: e29f6ac759971df73ed2ca48db6b6378
+
+
+DEV:
+  mysql-url: jdbc:mysql://2ze41u391c154ve0omo.mysql.rds.aliyuncs.com:3306/printroom?useSSL=false
+  mysql-username: root
+  mysql-password: AsterRoot2020
+  file-path: F:/MyCloudMusic-file
+  serverUrl: http://localhost:8080/PrintRoom
+
+#  file-path: C:/PrintFiles/docs
+#  static-locations: file:C:/PrintFiles/docs
+#  serverUrl: http://39.107.232.66:8080/UnmannedPrintRoom_war
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB

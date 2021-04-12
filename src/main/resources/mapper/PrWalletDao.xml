@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aster.bcu.printroom.mapper.PrWalletDao">
+  <resultMap id="BaseResultMap" type="com.aster.bcu.printroom.entity.PrWallet">
+    <result column="pk_user" jdbcType="VARCHAR" property="pkUser" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+  </resultMap>
+  <insert id="insert" keyColumn="pk_user" keyProperty="pkUser" parameterType="com.aster.bcu.printroom.entity.PrWallet" useGeneratedKeys="true">
+    insert into pr_wallet (balance)
+    values (#{balance,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" keyColumn="pk_user" keyProperty="pkUser" parameterType="com.aster.bcu.printroom.entity.PrWallet" useGeneratedKeys="true">
+    insert into pr_wallet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="balance != null">
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="pay" parameterType="com.aster.bcu.printroom.entity.PrWallet" >
+    update pr_bills set balance=#{balance,jdbcType=DOUBLE} where pk_user = #{pkUser,jdbcType=VARCHAR}
+  </update>
+  <select id="getRecord" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+    select balance from pr_wallet where pk_user=#{pkUser,jdbcType=VARCHAR}
+  </select>
+</mapper>

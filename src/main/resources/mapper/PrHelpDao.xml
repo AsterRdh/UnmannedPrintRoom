@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aster.bcu.printroom.mapper.PrHelpDao">
+  <resultMap id="BaseResultMap" type="com.aster.bcu.printroom.entity.PrHelp">
+    <id column="pk_help" jdbcType="INTEGER" property="pkHelp" />
+    <result column="help_info" jdbcType="VARCHAR" property="helpInfo" />
+    <result column="src" jdbcType="VARCHAR" property="src" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_help, help_info, src, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pr_help
+    where pk_help = #{pkHelp,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pr_help
+    where pk_help = #{pkHelp,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="pk_help" keyProperty="pkHelp" parameterType="com.aster.bcu.printroom.entity.PrHelp" useGeneratedKeys="true">
+    insert into pr_help (help_info, src, update_time
+      )
+    values (#{helpInfo,jdbcType=VARCHAR}, #{src,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="pk_help" keyProperty="pkHelp" parameterType="com.aster.bcu.printroom.entity.PrHelp" useGeneratedKeys="true">
+    insert into pr_help
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="helpInfo != null">
+        help_info,
+      </if>
+      <if test="src != null">
+        src,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="helpInfo != null">
+        #{helpInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null">
+        #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aster.bcu.printroom.entity.PrHelp">
+    update pr_help
+    <set>
+      <if test="helpInfo != null">
+        help_info = #{helpInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null">
+        src = #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_help = #{pkHelp,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aster.bcu.printroom.entity.PrHelp">
+    update pr_help
+    set help_info = #{helpInfo,jdbcType=VARCHAR},
+      src = #{src,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where pk_help = #{pkHelp,jdbcType=INTEGER}
+  </update>
+</mapper>

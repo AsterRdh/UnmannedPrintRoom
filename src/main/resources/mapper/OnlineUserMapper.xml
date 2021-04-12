@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aster.bcu.printroom.mapper.OnlineUserMapper">
+  <resultMap id="BaseResultMap" type="com.aster.bcu.printroom.entity.OnlineUser">
+    <result column="user_pk" jdbcType="VARCHAR" property="userPk" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="session_key" jdbcType="VARCHAR" property="sessionKey" />
+    <result column="ts" jdbcType="TIMESTAMP" property="ts" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_pk, openid, session_key, ts
+  </sql>
+  <insert id="insert" parameterType="com.aster.bcu.printroom.entity.OnlineUser">
+    insert into online_user (user_pk, openid, session_key, 
+      ts)
+    values (#{userPk,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{sessionKey,jdbcType=VARCHAR}, 
+      #{ts,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aster.bcu.printroom.entity.OnlineUser">
+    insert into online_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userPk != null">
+        user_pk,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="sessionKey != null">
+        session_key,
+      </if>
+      <if test="ts != null">
+        ts,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userPk != null">
+        #{userPk,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionKey != null">
+        #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="ts != null">
+        #{ts,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectBySessionKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from online_user
+    where session_key=#{session_key,jdbcType=VARCHAR}
+  </select>
+  <update id="updataTSBySessionKey" parameterType="java.lang.String">
+    update online_user
+    set ts=#{ts,jdbcType=VARCHAR}
+    where session_key=#{session_key,jdbcType=VARCHAR}
+  </update>
+</mapper>

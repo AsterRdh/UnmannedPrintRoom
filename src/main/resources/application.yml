@@ -1,0 +1,43 @@
+env: DEV
+
+spring:
+  profiles:
+    include: constant
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-2ze41u391c154ve0omo.mysql.rds.aliyuncs.com:3306/printroom?useSSL=false
+    username: root
+    password: AsterRoot2020
+    max-active: 200
+  mvc:
+    static-path-pattern: /resource/**
+  resources:
+    static-locations: file:${gen.file-path}
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 200MB
+
+gen:
+  file-path: ${${env}.file-path}
+
+
+
+
+serverUrl: ${${env}.file-path}
+
+wechat:
+  appId: ${appid}
+  secret: ${secret}
+
+server:
+  servlet:
+    context-path: /printroom
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.aster.bcu.printroom.mapper
+  map-underscore-to-camel-case: true
+

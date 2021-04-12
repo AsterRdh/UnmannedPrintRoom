@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aster.bcu.printroom.mapper.PrUserStorageDao">
+  <resultMap id="BaseResultMap" type="com.aster.bcu.printroom.entity.PrUserStorage">
+    <id column="pk_storage" jdbcType="VARCHAR" property="pkStorage" />
+    <result column="pk_item" jdbcType="VARCHAR" property="pkItem" />
+    <result column="stage" jdbcType="VARCHAR" property="stage" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="pk_user" jdbcType="VARCHAR" property="pkUser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_storage, pk_item, stage, start_date, end_date, remark, pk_user
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pr_user_storage
+    where pk_storage = #{pkStorage,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pr_user_storage
+    where pk_storage = #{pkStorage,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="pk_storage" keyProperty="pkStorage" parameterType="com.aster.bcu.printroom.entity.PrUserStorage" useGeneratedKeys="true">
+    insert into pr_user_storage (pk_item, stage, start_date, 
+      end_date, remark, pk_user
+      )
+    values (#{pkItem,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{pkUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="pk_storage" keyProperty="pkStorage" parameterType="com.aster.bcu.printroom.entity.PrUserStorage" useGeneratedKeys="true">
+    insert into pr_user_storage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkItem != null">
+        pk_item,
+      </if>
+      <if test="stage != null">
+        stage,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="pkUser != null">
+        pk_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkItem != null">
+        #{pkItem,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pkUser != null">
+        #{pkUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aster.bcu.printroom.entity.PrUserStorage">
+    update pr_user_storage
+    <set>
+      <if test="pkItem != null">
+        pk_item = #{pkItem,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pkUser != null">
+        pk_user = #{pkUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_storage = #{pkStorage,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aster.bcu.printroom.entity.PrUserStorage">
+    update pr_user_storage
+    set pk_item = #{pkItem,jdbcType=VARCHAR},
+      stage = #{stage,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      pk_user = #{pkUser,jdbcType=VARCHAR}
+    where pk_storage = #{pkStorage,jdbcType=VARCHAR}
+  </update>
+</mapper>
