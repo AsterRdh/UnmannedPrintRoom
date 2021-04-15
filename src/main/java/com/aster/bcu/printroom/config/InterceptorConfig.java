@@ -42,7 +42,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/resource/**").addResourceLocations("file:/usr/local/CloudMusic-res/");
-//        registry.addResourceHandler("/resource/**").addResourceLocations("file:F:/MyCloudMusic-file/");
+//        registry.addResourceHandler("/resource/**").addResourceLocations("file:/usr/local/CloudMusic-res/");
+        registry.addResourceHandler("/resource/**").addResourceLocations("file:F:/MyCloudMusic-file/");
     }
 }

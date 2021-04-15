@@ -37,6 +37,13 @@
     where user_minipro=#{openId,jdbcType=VARCHAR} and dr='0'
   </select>
 
+  <select id="selectAll" resultType="map">
+    select
+    pk_user pkUser,username name,ban,`ch_name` role
+    from pr_users inner join sys_role on sys_role.id=pr_users.pk_user
+    where dr='0'
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from pr_users
     where pk_user = #{pkUser,jdbcType=INTEGER}

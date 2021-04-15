@@ -6,6 +6,8 @@ import com.aster.bcu.printroom.service.PrintersService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +22,9 @@ public class PrintersServiceImpl implements PrintersService {
     }
 
     @Override
-    public PrPrinters getById(String printerId) {
-        return null;
+    public Map getById(String printerId) {
+        Map map = printersDao.selectByPrimaryKey(printerId);
+        return map;
     }
 
     @Override
@@ -35,7 +38,27 @@ public class PrintersServiceImpl implements PrintersService {
     }
 
     @Override
+    public int updatePrinter(Map map) {
+        Map map1 = printersDao.selectByPrimaryKey((String) map.get("pk_printer"));
+        map1.putAll(map);
+        map1.put("pkPrinter",map.get("pk_printer"));
+        //printersDao.updateByPrimaryKey();
+        return printersDao.updateByPrimaryKey(map1);
+    }
+
+    @Override
     public List<PrPrinters> test() {
         return printersDao.selectAll();
+    }
+
+    @Override
+    public boolean updateState(String id, String state) {
+        try {
+            return printersDao.updateStateByPrimaryKey(id, state)>0;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+
     }
 }

@@ -155,4 +155,9 @@
       approval_time = #{approvalTime,jdbcType=TIMESTAMP}
     where pk_ad = #{pkAd,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from pr_ads
+  </select>
 </mapper>

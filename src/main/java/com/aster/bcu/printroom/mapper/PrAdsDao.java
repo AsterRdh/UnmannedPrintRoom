@@ -2,6 +2,8 @@ package com.aster.bcu.printroom.mapper;
 
 import com.aster.bcu.printroom.entity.PrAds;
 
+import java.util.List;
+
 public interface PrAdsDao {
     int deleteByPrimaryKey(String pkAd);
 
@@ -14,4 +16,6 @@ public interface PrAdsDao {
     int updateByPrimaryKeySelective(PrAds record);
 
     int updateByPrimaryKey(PrAds record);
+
+    List<PrAds> selectAll();
 }

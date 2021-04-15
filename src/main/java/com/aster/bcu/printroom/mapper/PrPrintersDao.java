@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PrPrintersDao {
@@ -14,11 +15,13 @@ public interface PrPrintersDao {
 
     int insertSelective(PrPrinters record);
 
-    PrPrinters selectByPrimaryKey(String pkPrinter);
+    Map selectByPrimaryKey(String pkPrinter);
 
     List<PrPrinters> selectAll();
 
     int updateByPrimaryKeySelective(PrPrinters record);
 
-    int updateByPrimaryKey(PrPrinters record);
+    int updateByPrimaryKey(Map record);
+
+    int updateStateByPrimaryKey(String pkPrinter,String state);
 }

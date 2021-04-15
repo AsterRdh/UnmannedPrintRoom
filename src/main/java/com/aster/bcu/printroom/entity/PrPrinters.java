@@ -1,5 +1,6 @@
 package com.aster.bcu.printroom.entity;
 
+import java.awt.*;
 import java.io.Serializable;
 import lombok.Data;
 

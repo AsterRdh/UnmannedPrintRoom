@@ -2,6 +2,9 @@ package com.aster.bcu.printroom.mapper;
 
 import com.aster.bcu.printroom.entity.PrUsers;
 
+import java.util.List;
+import java.util.Map;
+
 public interface PrUsersDao {
     int deleteByPrimaryKey(Integer pkUser);
 
@@ -12,6 +15,8 @@ public interface PrUsersDao {
     PrUsers selectByPrimaryKey(Integer pkUser);
 
     PrUsers selectByUserInfo(String openId);
+
+    List<Map> selectAll();
 
     int updateByPrimaryKeySelective(PrUsers record);
 

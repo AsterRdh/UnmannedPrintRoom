@@ -9,10 +9,7 @@ import com.aster.bcu.printroom.entity.TaskInfo;
 import com.aster.bcu.printroom.service.PrintFileService;
 import com.aster.bcu.printroom.tools.GlobalFileUtils;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -37,11 +34,25 @@ public class GlobalFileController {
         return Message.success("test");
     }
 
+    @PostMapping("/upload")
+    public Message fileUpload2(@RequestBody MultipartFile[] file) throws IOException {
+        if (file.length>0) {
+            Map rs= GlobalFileUtils.saveFileToTempDir(config.globalFilePath,config.serverUrl,file);
+            String rss=(String) rs.get("name");
+            File file1=new File(rss);
+            rss="http://127.0.0.1:8080/PrintRoom/resource/"+file1.getName().replace(";","");
+            rs.put("path",rss);
+            Message<Object> success = Message.success(null);
+            success.setObj(rs);
+            return success;
+        }
+        return Message.fail("没有读取到您的上传文件信息");
+    }
+
     @PostMapping("/")
     public Message fileUpload(int printStationCode,MultipartFile[] file,String fileName) throws IOException {
         if (file.length>0) {
-            Map<String,Object> remap=new HashMap<>();
-            String contentType = file[0].getContentType();
+
             Map rs= GlobalFileUtils.saveFileToTempDir(config.globalFilePath,config.serverUrl,file);
             System.out.println("name: "+file[0].getOriginalFilename());
             StringBuffer codeString=new StringBuffer();
