@@ -20,12 +20,16 @@
 
 
   <sql id="Base_Column_List">
-    pk_user, username, user_password, userphone, user_minipro, user_seed, ban, ban_info, 
+    pk_user, username, user_password, userphone, user_minipro, user_seed, ban, ban_info,
     dr
+  </sql>  <sql id="Base_Column_List2">
+    pk_user, username, user_password, userphone, user_minipro, user_seed, ban_info, user_xp, user_img, ban, dr
   </sql>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select
+    <include refid="Base_Column_List2" />
     from pr_users
     where pk_user = #{pkUser,jdbcType=INTEGER} and dr='0'
   </select>
@@ -43,17 +47,23 @@
     from pr_users inner join sys_role on sys_role.id=pr_users.pk_user
     where dr='0'
   </select>
+    <select id="selectAll4Translate" resultMap="BaseResultMap">
+      select
+        <include refid="Base_Column_List" />
+      from pr_users
+      where dr='0'
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from pr_users
     where pk_user = #{pkUser,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="pk_user" keyProperty="pkUser" parameterType="com.aster.bcu.printroom.entity.PrUsers" useGeneratedKeys="true">
-    insert into pr_users (username, user_password, userphone, 
-      user_minipro, user_seed, ban, 
+    insert into pr_users (username, user_password, userphone,
+      user_minipro, user_seed, ban,
       ban_info, dr)
-    values (#{username,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR}, 
-      #{userMinipro,jdbcType=VARCHAR}, #{userSeed,jdbcType=INTEGER}, #{ban,jdbcType=CHAR}, 
+    values (#{username,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR},
+      #{userMinipro,jdbcType=VARCHAR}, #{userSeed,jdbcType=INTEGER}, #{ban,jdbcType=CHAR},
       #{banInfo,jdbcType=VARCHAR}, #{dr,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" keyColumn="pk_user" keyProperty="pkUser" parameterType="com.aster.bcu.printroom.entity.PrUsers" useGeneratedKeys="true">

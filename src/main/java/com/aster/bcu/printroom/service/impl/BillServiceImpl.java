@@ -1,13 +1,7 @@
 package com.aster.bcu.printroom.service.impl;
 
-import com.aster.bcu.printroom.entity.ChargingStandard;
-import com.aster.bcu.printroom.entity.PrBills;
-import com.aster.bcu.printroom.entity.PrPrinters;
-import com.aster.bcu.printroom.entity.PrWallet;
-import com.aster.bcu.printroom.mapper.ChargingStandardDao;
-import com.aster.bcu.printroom.mapper.PrBillsMapper;
-import com.aster.bcu.printroom.mapper.PrPrintersDao;
-import com.aster.bcu.printroom.mapper.PrWalletDao;
+import com.aster.bcu.printroom.entity.*;
+import com.aster.bcu.printroom.mapper.*;
 import com.aster.bcu.printroom.service.IBillService;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 @Component
 public class BillServiceImpl implements IBillService {
 
@@ -28,6 +24,29 @@ public class BillServiceImpl implements IBillService {
 
     @Resource
     private PrWalletDao walletDao ;
+
+    @Resource
+    private PrUsersDao usersDao;
+
+    @Resource
+    private PrPrintersDao printersDao;
+
+    @Override
+    public List<PrBills> getAllBill() {
+        List<PrUsers> users = usersDao.selectAll4Translate();
+        List<PrPrinters> prPrinters = printersDao.selectAll();
+        List<PrBills> prBills = billsMapper.selectAll();
+
+        Map<Integer, String> userMap = users.stream().collect(Collectors.toMap(PrUsers::getPkUser, PrUsers::getUsername));
+        Map<String, String> printerMap = prPrinters.stream().collect(Collectors.toMap(PrPrinters::getPkPrinter, PrPrinters::getName));
+
+        for (PrBills bill:prBills) {
+            bill.setPkUser(userMap.get(Integer.parseInt(bill.getPkUser() )));
+            bill.setPkPrinter(printerMap.get(bill.getPkPrinter()));
+
+        }
+        return prBills;
+    }
 
     @Override
     public PrBills addBill( PrBills bill) {
@@ -71,6 +90,12 @@ public class BillServiceImpl implements IBillService {
     @Override
     public List<PrBills> getBillsByUser(String user) {
         return billsMapper.selectAllByUser(user);
+    }
+
+    @Override
+    public PrBills getOneBill(String id) {
+        PrBills prBills = billsMapper.selectByPrimaryKey(id);
+        return prBills;
     }
 
     private Map listToMap(Map<String,Object> chargingTree,List<ChargingStandard> csList){

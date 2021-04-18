@@ -10,4 +10,6 @@ import java.util.List;
 public interface SysUserRoleMapper {
 
     public List<SysUserRole> listByUserId(Integer userId);
+
+    public SysUserRole selectByPrimaryKey(Integer userId);
 }

@@ -33,6 +33,22 @@ public class BillsController {
         return message;
     }
 
+    @GetMapping("/getOne")
+    public Message getBillInfo(String id){
+        PrBills bill = billService.getOneBill(id);
+        Message<Object> message = Message.success("获取订单信息");
+        message.setObj(bill);
+        return message;
+    }
+
+    @GetMapping("/getAll")
+    public Message getAllBill(){
+        List<PrBills> allBill = billService.getAllBill();
+        Message<Object> message = Message.success("获取订单信息");
+        message.setObj(allBill);
+        return message;
+    }
+
     @PostMapping("/doPrint")
     Message addBill(@RequestBody String requestBody, HttpServletResponse response){
         //规格

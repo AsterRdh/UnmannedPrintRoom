@@ -17,7 +17,7 @@ public interface PrBillsMapper {
 
     PrBills selectByPrimaryKey(String pkBill);
 
-    List<PrBills> selectAll(String pkBill);
+    List<PrBills> selectAll();
 
     int updateByPrimaryKeySelective(PrBills record);
 

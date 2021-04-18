@@ -10,7 +10,7 @@ import java.util.Map;
 @Service
 public interface IBillService {
 
-
+    public List<PrBills> getAllBill();
 
     public PrBills addBill( PrBills bill);
 
@@ -21,4 +21,6 @@ public interface IBillService {
     public boolean doPay(String user,String bill);
 
     public List<PrBills> getBillsByUser(String user);
+
+    public PrBills getOneBill(String id);
 }

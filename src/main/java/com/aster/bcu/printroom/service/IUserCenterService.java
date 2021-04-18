@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Service
 public interface IUserCenterService {
-    public PrUsers getUserInfo(int userId);
+    public Map getUserInfo(int userId);
 
     public List<Map> getAllUser();
 }

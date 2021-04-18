@@ -18,6 +18,8 @@ public interface PrUsersDao {
 
     List<Map> selectAll();
 
+    List<PrUsers> selectAll4Translate();
+
     int updateByPrimaryKeySelective(PrUsers record);
 
     int updateByPrimaryKey(PrUsers record);

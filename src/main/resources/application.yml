@@ -32,7 +32,7 @@ wechat:
 
 server:
   servlet:
-    context-path: /printroom
+    context-path: /PrintRoom
     multipart:
       max-file-size: 200MB
       max-request-size: 200MB
