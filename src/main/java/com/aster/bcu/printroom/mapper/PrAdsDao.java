@@ -18,4 +18,6 @@ public interface PrAdsDao {
     int updateByPrimaryKey(PrAds record);
 
     List<PrAds> selectAll();
+
+    List<String> selectScr();
 }

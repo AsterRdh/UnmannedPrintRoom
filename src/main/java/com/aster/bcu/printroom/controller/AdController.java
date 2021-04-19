@@ -5,9 +5,7 @@ import com.aster.bcu.printroom.entity.Message;
 import com.aster.bcu.printroom.entity.PrAds;
 import com.aster.bcu.printroom.service.AdService;
 import com.aster.bcu.printroom.service.IBillService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
@@ -65,8 +63,8 @@ public class AdController {
         return success;
     }
 
-    @GetMapping("/")
-    public Message getAd(int pos){
+    @GetMapping("/adSrc")
+    public List<String> getAd(int pos){
         switch (pos){
             case 0:
                 break;
@@ -75,7 +73,16 @@ public class AdController {
             default:
                 break;
         }
+        List<String> adScr = adService.getAdScr();
+
+        return adScr;
+    }
+
+    @PostMapping("/save")
+    public Message saveBill(@RequestBody Map map){
+
 
         return Message.success("");
     }
+
 }

@@ -42,4 +42,10 @@ public class AdServiceImpl implements AdService {
     public int updateState(String id, String state) {
         return 0;
     }
+
+    @Override
+    public List<String> getAdScr() {
+
+        return prAdsDao.selectScr();
+    }
 }

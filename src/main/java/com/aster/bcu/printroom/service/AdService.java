@@ -12,5 +12,6 @@ public interface AdService {
     public int updateAd(PrAds ad);
     public int approve(String id);
     public int updateState(String id,String state);
+    public List<String> getAdScr();
 
 }

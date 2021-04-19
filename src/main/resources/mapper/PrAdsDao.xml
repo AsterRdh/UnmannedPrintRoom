@@ -160,4 +160,7 @@
     select  <include refid="Base_Column_List" />
     from pr_ads
   </select>
+    <select id="selectScr" resultType="java.lang.String">
+      select src from pr_ads where dr=0 and state=0 and NOW() between start_date and end_date
+    </select>
 </mapper>
