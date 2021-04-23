@@ -1,6 +1,7 @@
 package com.aster.bcu.printroom.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -68,12 +69,15 @@ public class PrBills implements Serializable {
      */
     private String pkPrinter;
 
+    /**
+     * 下单人
+     */
     private String pkUser;
 
     private static final long serialVersionUID = 1L;
 
 
-    public void newPrBills(String name, Double amount, String info, String type, String state, Date startDate, Integer dr, String pkPrinter, String pkUser) {
+    public void newPrBills(String name, BigDecimal amount, String info, String type, String state, Date startDate, Integer dr, String pkPrinter, String pkUser) {
         String str =   UUID.randomUUID().toString();
         str=DigestUtils.md5DigestAsHex(str.getBytes());
         String regex = "(.{4})";
@@ -81,7 +85,7 @@ public class PrBills implements Serializable {
         str=str.substring(0,str.length()-1);
         this.pkBill =str;
         this.name = name;
-        this.amount = amount;
+        this.amount = amount.doubleValue();
         this.info = info;
         this.type = type;
         this.state = state;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PrBillsMapper {
@@ -27,5 +28,5 @@ public interface PrBillsMapper {
 
     int updateStateByPrimaryKey(String pkBill,String state);
 
-    List<PrBills> selectAllByUser(String pkUser);
+    List<Map> selectAllByUser(String pkUser);
 }

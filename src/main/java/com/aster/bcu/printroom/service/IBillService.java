@@ -20,7 +20,7 @@ public interface IBillService {
 
     public boolean doPay(String user,String bill);
 
-    public List<PrBills> getBillsByUser(String user);
+    public List<Map> getBillsByUser(String user);
 
     public PrBills getOneBill(String id);
 }

@@ -4,12 +4,14 @@ import com.aster.bcu.printroom.entity.Message;
 import com.aster.bcu.printroom.entity.PrUsers;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public interface LogService {
     Message<String> tokenTest();
     Message<PrUsers> getUserInfo(String pkUser);
     PrUsers doLogin(String username,String password);
-    String doLoginForWeChat(String code);
+    Map doLoginForWeChat(String code);
 
     int bandCheck(String openId);
 

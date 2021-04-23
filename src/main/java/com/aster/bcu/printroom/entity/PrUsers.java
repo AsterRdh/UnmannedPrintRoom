@@ -1,6 +1,8 @@
 package com.aster.bcu.printroom.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import lombok.Data;
 
 /**
@@ -63,6 +65,11 @@ public class PrUsers implements Serializable {
      * 删除标识
      */
     private String dr;
+
+    /**
+     * 余额
+     */
+    private BigDecimal money;
 
     private static final long serialVersionUID = 1L;
 

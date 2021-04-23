@@ -27,7 +27,7 @@ public class BillsController {
 
     @GetMapping("/list")
     Message getBillsListForUser(String user, HttpServletRequest request){
-        List<PrBills> billsByUser = billService.getBillsByUser(user);
+        List<Map> billsByUser = billService.getBillsByUser(user);
         Message<Object> message = Message.success("获取订单信息");
         message.setObj(billsByUser);
         return message;
@@ -50,16 +50,14 @@ public class BillsController {
     }
 
     @PostMapping("/doPrint")
-    Message addBill(@RequestBody String requestBody, HttpServletResponse response){
-        //规格
-        Map paramData= new Gson().fromJson(requestBody,HashMap.class);
+    Message addBill(@RequestBody Map requestBody, HttpServletResponse response){
 
-        String printer=(String)paramData.get("printer");
-        String size=(String)paramData.get("size");
-        int count=((Double)paramData.get("count")).intValue();
-        String color=(String)paramData.get("color");
-        String name=(String)paramData.get("file");
-        String user=(String)paramData.get("user");
+        String printer=(String)requestBody.get("printer");
+        String size=(String)requestBody.get("size");
+        int count=(Integer)requestBody.get("count");
+        String color=(String)requestBody.get("color");
+        String name=(String)requestBody.get("file");
+        String user=(String)requestBody.get("user");
 
 
 
@@ -69,9 +67,14 @@ public class BillsController {
         BigDecimal total=price.multiply(new BigDecimal(count));
 
         PrBills bill=new PrBills();
-        bill.newPrBills(name,total.doubleValue(),size+" 共"+count+"页 " + color,"","1",new Date(), 0,printer,user);
+        bill.newPrBills(name,total,size+" 共"+count+"页 " + color,"","2",new Date(), 0,printer,user);
         PrBills prBills = billService.addBill(bill);
-        Message<Object> success = Message.success("");
+        if (prBills==null){
+            Message<Object> success = Message.fail("500");
+            success.setObj("余额不足");
+            return success;
+        }
+        Message<Object> success = Message.success("200");
         success.setObj(prBills);
         return success;
     }

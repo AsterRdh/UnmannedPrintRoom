@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class LocServiceImpl implements LogService {
@@ -44,8 +46,9 @@ public class LocServiceImpl implements LogService {
     }
 
     @Override
-    public String doLoginForWeChat(String code) {
-
+    public Map doLoginForWeChat(String code) {
+        Map resMap=new HashMap();
+        Boolean newUser=true;
         PrUsers user = usersDao.selectByUserInfo(code);
         if(user==null) {
             //todo 注册
@@ -53,8 +56,15 @@ public class LocServiceImpl implements LogService {
             users.newPrUsers(0, null, "", "", code, 0, "", 100l, "", "0", "0");
             usersDao.insert(users);
             user = usersDao.selectByUserInfo(code);
+        }else {
+            newUser=false;
+
+
+
         }
-        return user.getPkUser()+"";
+        resMap.put("userId",user.getPkUser());
+        resMap.put("newUser",newUser);
+        return resMap;
     }
 
     @Override

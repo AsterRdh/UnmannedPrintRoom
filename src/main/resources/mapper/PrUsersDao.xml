@@ -8,9 +8,12 @@
     <result column="userphone" jdbcType="VARCHAR" property="userphone" />
     <result column="user_minipro" jdbcType="VARCHAR" property="userMinipro" />
     <result column="user_seed" jdbcType="INTEGER" property="userSeed" />
-    <result column="ban" jdbcType="CHAR" property="ban" />
     <result column="ban_info" jdbcType="VARCHAR" property="banInfo" />
+    <result column="user_xp" jdbcType="BIGINT" property="userXp" />
+    <result column="user_img" jdbcType="VARCHAR" property="userImg" />
+    <result column="ban" jdbcType="CHAR" property="ban" />
     <result column="dr" jdbcType="CHAR" property="dr" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
   </resultMap>
 
   <parameterMap id="BaseLogMap" type="com.aster.bcu.printroom.entity.PrUsers">
@@ -22,8 +25,9 @@
   <sql id="Base_Column_List">
     pk_user, username, user_password, userphone, user_minipro, user_seed, ban, ban_info,
     dr
-  </sql>  <sql id="Base_Column_List2">
-    pk_user, username, user_password, userphone, user_minipro, user_seed, ban_info, user_xp, user_img, ban, dr
+  </sql>
+  <sql id="Base_Column_List2">
+    pk_user, username, user_password, userphone, user_minipro, user_seed, ban_info, user_xp, user_img, ban, dr,money
   </sql>
 
 
@@ -43,8 +47,10 @@
 
   <select id="selectAll" resultType="map">
     select
-    pk_user pkUser,username name,ban,`ch_name` role
-    from pr_users inner join sys_role on sys_role.id=pr_users.pk_user
+        pk_user pkUser,username name,ban,`ch_name` role
+    from pr_users
+        inner join sys_user_role on sys_user_role.user_id=pr_users.pk_user
+        left join sys_role on sys_role.id=sys_user_role.role_id
     where dr='0'
   </select>
     <select id="selectAll4Translate" resultMap="BaseResultMap">
@@ -121,6 +127,15 @@
       </if>
     </trim>
   </insert>
+
+  <insert id="resUserTable">
+    insert into sys_user VALUES (#{userId},#{username},"123qwe")
+  </insert>
+
+  <insert id="resUserRole">
+    insert into sys_user_role VALUES(#{userId},#{roleId})
+  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.aster.bcu.printroom.entity.PrUsers">
     update pr_users
     <set>
@@ -161,6 +176,7 @@
       ban = #{ban,jdbcType=CHAR},
       ban_info = #{banInfo,jdbcType=VARCHAR},
       dr = #{dr,jdbcType=CHAR}
+      money=#{money,jdbcType=DECIMAL}
     where pk_user = #{pkUser,jdbcType=INTEGER}
   </update>
 </mapper>

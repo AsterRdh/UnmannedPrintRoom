@@ -103,7 +103,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                     .exceptionHandling()
                 .and().authorizeRequests()
-                    .antMatchers("/resource/**","/api/file/upload","/ad/adSrc").permitAll()
+                    .antMatchers(
+                            "/resource/**",
+                            "/api/file/upload",
+                            "/ad/adSrc",
+                            "/doSocket/pushVideoListToWeb","/myWs","/lr/**").permitAll()
                     .anyRequest().authenticated()
         ;
 

@@ -23,4 +23,9 @@ public interface PrUsersDao {
     int updateByPrimaryKeySelective(PrUsers record);
 
     int updateByPrimaryKey(PrUsers record);
+
+    int resUserTable(Map map);
+
+    int resUserRole(Map map);
+
 }

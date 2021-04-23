@@ -32,11 +32,12 @@
     where dr=0
   </select>
 
-  <select id="selectAllByUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectAllByUser" parameterType="java.lang.String" resultType="java.util.Map">
     select
-    <include refid="Base_Column_List" />
-    from pr_bills
-    where dr=0 and pk_user= #{pkUser,jdbcType=VARCHAR}
+    a.pk_bill pkBill,a.name,a.code,a.amount,date_format(a.start_date,'%Y-%m-%d %H:%i:%S') startDate , a.state,
+    b.name printerName,x(location) printerX , y(location) printerY,b.info printerInfo
+    from pr_bills a left join pr_printers b on a.pk_printer=b.pk_printer
+    where a.dr=0  and pk_user= #{pkUser,jdbcType=VARCHAR}
   </select>
 
 
@@ -46,13 +47,13 @@
   </delete>
   <insert id="insert" keyColumn="pk_bill" keyProperty="pkBill" parameterType="com.aster.bcu.printroom.entity.PrBills" useGeneratedKeys="false">
     insert into pr_bills (pk_bill,code, `name`, amount,
-      info, `type`, `state`, 
-      start_date, end_date, dr, 
-      pk_printer,pk_user)
+      info, `type`, `state`,
+      start_date, end_date, dr,
+      pk_printer, pk_user)
     values (#{pkBill,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE},
-      #{info,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
-      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{dr,jdbcType=INTEGER}, 
-      #{pkPrinter,jdbcType=VARCHAR},#{pkUser,jdbcType=VARCHAR})
+      #{info,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{dr,jdbcType=INTEGER},
+      #{pkPrinter,jdbcType=VARCHAR}, #{pkUser,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="pk_bill" keyProperty="pkBill" parameterType="com.aster.bcu.printroom.entity.PrBills" useGeneratedKeys="true">
     insert into pr_bills

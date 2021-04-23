@@ -42,7 +42,7 @@ public class GlobalFileController {
             File file1=new File(rss);
             rss="http://127.0.0.1:8080/PrintRoom/resource/"+file1.getName().replace(";","");
             rs.put("path",rss);
-            Message<Object> success = Message.success(null);
+            Message success = Message.success("200");
             success.setObj(rs);
             return success;
         }

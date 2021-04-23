@@ -7,10 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -50,7 +47,19 @@ public class BillServiceImpl implements IBillService {
 
     @Override
     public PrBills addBill( PrBills bill) {
-        billsMapper.insert(bill);
+
+        PrUsers users = usersDao.selectByPrimaryKey(Integer.parseInt(bill.getPkUser()));
+        BigDecimal subtract = users.getMoney().subtract(new BigDecimal(bill.getAmount()));
+        if(subtract.doubleValue()>0){
+            bill.setPkBill(UUID.randomUUID().toString());
+            int insert = billsMapper.insert(bill);
+            users.setMoney(subtract);
+            usersDao.updateByPrimaryKey(users);
+        }else {
+           return null;
+        }
+
+
         return bill;
     }
 
@@ -88,8 +97,22 @@ public class BillServiceImpl implements IBillService {
     }
 
     @Override
-    public List<PrBills> getBillsByUser(String user) {
-        return billsMapper.selectAllByUser(user);
+    public List<Map> getBillsByUser(String user) {
+
+
+
+        List<Map> list = billsMapper.selectAllByUser(user);
+        for(Map map:list){
+            switch ((String) map.get("state")){
+                case "-1":map.put("stateZh","已关闭"); break;
+                case "0":map.put("stateZh","待付款"); break;
+                case "1":map.put("stateZh","已完成"); break;
+                case "2":map.put("stateZh","排队中"); break;
+                case "3":map.put("stateZh","打印中"); break;
+                case "4":map.put("stateZh","待取件"); break;
+            }
+        }
+        return list;
     }
 
     @Override

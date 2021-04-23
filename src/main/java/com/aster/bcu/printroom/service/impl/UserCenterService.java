@@ -45,6 +45,7 @@ public class UserCenterService implements IUserCenterService {
         map.put("banInfo",prUser.getBanInfo());
         map.put("pkUser",prUser.getPkUser()+"");
         map.put("openID",prUser.getUserMinipro()+"");
+        map.put("money",prUser.getMoney());
 
 
         return map;
