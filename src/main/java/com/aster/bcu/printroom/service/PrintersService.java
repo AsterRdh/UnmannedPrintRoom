@@ -20,5 +20,6 @@ public interface PrintersService {
 
     public boolean updateState(String id,String state);
 
+    public List<PrPrinters> getAllEnablePrinter();
 
 }

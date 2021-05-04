@@ -3,9 +3,12 @@ package com.aster.bcu.printroom.service.impl;
 import com.aster.bcu.printroom.entity.*;
 import com.aster.bcu.printroom.mapper.*;
 import com.aster.bcu.printroom.service.IBillService;
+import com.aster.bcu.printroom.service.WebSocketServer;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -94,6 +97,45 @@ public class BillServiceImpl implements IBillService {
         }else {
             return false;
         }
+    }
+
+    @Override
+    public Message doCancel(String billId){
+        PrBills prBills = billsMapper.selectByPrimaryKey(billId);
+        String pkPrinter = prBills.getPkPrinter();
+        try {
+            WebSocketServer.doDrop(pkPrinter,billId);
+            Message message=Message.success("200");
+            billsMapper.updateStateByPrimaryKey(billId,"-1");
+            return message;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message message=Message.fail("500");
+            message.setMsg("无法取消订单");
+            return message;
+        }
+    }
+
+    @Override
+    public Message doOpenDoor(String billId) {
+        PrBills prBills = billsMapper.selectByPrimaryKey(billId);
+        String pkPrinter = prBills.getPkPrinter();
+        try {
+            WebSocketServer.doOpenDoor(pkPrinter,billId);
+            Message message=Message.success("200");
+            return message;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message message=Message.fail("500");
+            message.setMsg("开门失败");
+            return message;
+        }
+
+    }
+
+    @Override
+    public String getPrinter(String name) {
+        return null;
     }
 
     @Override

@@ -107,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             "/resource/**",
                             "/api/file/upload",
                             "/ad/adSrc",
-                            "/doSocket/pushVideoListToWeb","/myWs","/lr/**").permitAll()
+                            "/doSocket/pushVideoListToWeb","/myWs","/lr/**","/test/**").permitAll()
                     .anyRequest().authenticated()
         ;
 

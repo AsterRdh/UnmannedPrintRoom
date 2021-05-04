@@ -175,7 +175,7 @@
       user_seed = #{userSeed,jdbcType=INTEGER},
       ban = #{ban,jdbcType=CHAR},
       ban_info = #{banInfo,jdbcType=VARCHAR},
-      dr = #{dr,jdbcType=CHAR}
+      dr = #{dr,jdbcType=CHAR},
       money=#{money,jdbcType=DECIMAL}
     where pk_user = #{pkUser,jdbcType=INTEGER}
   </update>

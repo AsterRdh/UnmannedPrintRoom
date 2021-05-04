@@ -1,6 +1,7 @@
 package com.aster.bcu.printroom.service;
 
 import com.aster.bcu.printroom.entity.ChargingStandard;
+import com.aster.bcu.printroom.entity.Message;
 import com.aster.bcu.printroom.entity.PrBills;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +24,10 @@ public interface IBillService {
     public List<Map> getBillsByUser(String user);
 
     public PrBills getOneBill(String id);
+
+    public Message doCancel(String billId);
+
+    public Message doOpenDoor(String billId);
+
+    public String getPrinter(String name);
 }

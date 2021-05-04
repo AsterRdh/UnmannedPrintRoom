@@ -20,7 +20,7 @@
     pk_printer, code, `name`, y(location) y,x(location) x, `state`, error_info, info, dr, ts, printer_key
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="map">
-    select 
+    select
     <include refid="Base_Column_List2" />
     from pr_printers
     where pk_printer = #{pkPrinter,jdbcType=VARCHAR}
@@ -32,17 +32,22 @@
     from pr_printers
 
   </select>
+    <select id="selectAllEnable" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List2" />
+      from pr_printers where state=1
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from pr_printers
     where pk_printer = #{pkPrinter,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="pk_printer" keyProperty="pkPrinter" parameterType="com.aster.bcu.printroom.entity.PrPrinters" useGeneratedKeys="true">
-    insert into pr_printers (code, `name`, `location`, 
-      `state`, error_info, info, 
+    insert into pr_printers (code, `name`, `location`,
+      `state`, error_info, info,
       dr, ts, printer_key)
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
-      #{state,jdbcType=VARCHAR}, #{errorInfo,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR},
+      #{state,jdbcType=VARCHAR}, #{errorInfo,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR},
       #{dr,jdbcType=INTEGER}, #{ts,jdbcType=VARCHAR}, #{printerKey,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="pk_printer" keyProperty="pkPrinter" parameterType="com.aster.bcu.printroom.entity.PrPrinters" useGeneratedKeys="true">
@@ -157,6 +162,12 @@
     set
       `state` = #{state,jdbcType=VARCHAR}
     where pk_printer = #{pkPrinter,jdbcType=VARCHAR}
+  </update>
+  <update id="updateState">
+    update pr_printers
+    set
+      `state` = #{state,jdbcType=VARCHAR}
+    where `name` = #{printerName,jdbcType=VARCHAR}
   </update>
 
 </mapper>

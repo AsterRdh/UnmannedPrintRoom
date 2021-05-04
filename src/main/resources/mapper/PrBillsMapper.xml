@@ -19,7 +19,7 @@
     pk_bill, code, `name`, amount, info, `type`, `state`, start_date, end_date, dr, pk_printer , pk_user
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from pr_bills
     where pk_bill = #{pkBill,jdbcType=VARCHAR}
@@ -38,6 +38,7 @@
     b.name printerName,x(location) printerX , y(location) printerY,b.info printerInfo
     from pr_bills a left join pr_printers b on a.pk_printer=b.pk_printer
     where a.dr=0  and pk_user= #{pkUser,jdbcType=VARCHAR}
+	ORDER BY a.start_date DESC
   </select>
 
 

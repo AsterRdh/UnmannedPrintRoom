@@ -1,15 +1,23 @@
 package com.aster.bcu.printroom.service;
 
+import com.aster.bcu.printroom.entity.PrBills;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @Component
 @ServerEndpoint("/myWs")
 public class WebSocketServer {
+
+    private static Map<String,Session> taskMap=new HashMap();
+    private static Map<String,LinkedHashMap<String, PrBills>> printerBillMap =new HashMap();
+
     private static int onlineCount = 0;
     private static CopyOnWriteArraySet<WebSocketServer> webSocketSet = new CopyOnWriteArraySet<WebSocketServer>();
 
@@ -27,10 +35,37 @@ public class WebSocketServer {
         WebSocketServer.onlineCount--;
     }
 
+    public static Boolean doOpenDoor(String printerPk,String bill){
+        return true;
+    }
+
+    public static Boolean doDrop(String printerPk,String bill){
+        try {
+            printerBillMap.get(printerPk).remove(bill);
+            sendMessage("newTaskList",printerPk);
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static int getTaskCont(String printerPk){
+        try {
+            return printerBillMap.get(printerPk).size();
+        }catch (Exception e){
+            return 0;
+        }
+
+    }
+
     public void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
     }
-
+    public static void sendMessage(String message,String printerId) throws IOException {
+        Session session = taskMap.get(printerId);
+        session.getBasicRemote().sendText(message);
+    }
     public static void sendInfo(String message) throws IOException {
         System.out.println(message);
         for (WebSocketServer item : webSocketSet) {
@@ -65,7 +100,17 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("来自客户端的消息:" + message);
+        String[] strings=message.split(" ");
+        switch (strings[0]){
+            case "login":
+                taskMap.put(strings[1],session);
+                break;
+            case "info":
 
+                break;
+            case "finish":
+                break;
+        }
         //群发消息
         for (WebSocketServer item : webSocketSet) {
             try {

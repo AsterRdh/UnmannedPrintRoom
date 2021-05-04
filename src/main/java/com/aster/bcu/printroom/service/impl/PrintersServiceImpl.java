@@ -29,7 +29,7 @@ public class PrintersServiceImpl implements PrintersService {
 
     @Override
     public List<PrPrinters> getPrintersByAddr(String addr) {
-        return null;
+        return printersDao.selectAllEnable();
     }
 
     @Override
@@ -60,5 +60,11 @@ public class PrintersServiceImpl implements PrintersService {
             return false;
         }
 
+    }
+
+    @Override
+    public List<PrPrinters> getAllEnablePrinter() {
+        printersDao.selectAllEnable();
+        return printersDao.selectAllEnable();
     }
 }

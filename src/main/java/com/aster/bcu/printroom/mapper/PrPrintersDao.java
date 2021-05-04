@@ -18,10 +18,13 @@ public interface PrPrintersDao {
     Map selectByPrimaryKey(String pkPrinter);
 
     List<PrPrinters> selectAll();
+    List<PrPrinters> selectAllEnable();
 
     int updateByPrimaryKeySelective(PrPrinters record);
 
     int updateByPrimaryKey(Map record);
 
     int updateStateByPrimaryKey(String pkPrinter,String state);
+
+    int updateState(String printerName,String state);
 }

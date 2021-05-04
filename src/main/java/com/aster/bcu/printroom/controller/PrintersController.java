@@ -50,6 +50,18 @@ public class PrintersController {
         return success;
     }
 
+    @GetMapping("/getPrinterlistEnable")
+    public Message getEnablePrinter(double x,double y){
+        List<PrPrinters> allEnablePrinter = printersService.getAllEnablePrinter();
+        List<String> resMap=new ArrayList<>();
+        for (PrPrinters printer:allEnablePrinter){
+            resMap.add(printer.getName());
+        }
+        Message message=Message.success("200");
+        message.setObj(resMap);
+        return message;
+    }
+
     @GetMapping("/enable")
     public Boolean setState(String id,String state){
         return printersService.updateState(id,state);

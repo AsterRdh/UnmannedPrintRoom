@@ -4,6 +4,7 @@ import com.aster.bcu.printroom.entity.Message;
 import com.aster.bcu.printroom.entity.PrBills;
 import com.aster.bcu.printroom.service.IBillService;
 import com.aster.bcu.printroom.service.PrintersService;
+import com.aster.bcu.printroom.service.WebSocketServer;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -46,6 +47,25 @@ public class BillsController {
         List<PrBills> allBill = billService.getAllBill();
         Message<Object> message = Message.success("获取订单信息");
         message.setObj(allBill);
+        return message;
+    }
+
+    @GetMapping("/doCancel")
+    public Message doCancel(String billId){
+        return billService.doCancel(billId);
+    }
+
+    @GetMapping("/doOpenDoor")
+    public Message doOpenDoor(String billId){
+        return billService.doOpenDoor(billId);
+    }
+
+    @GetMapping("/getPrintTaskCount")
+    public Message getTaskCount(String printer){
+
+        int taskCont = WebSocketServer.getTaskCont(printer);
+        Message message=Message.success("200");
+        message.setObj(taskCont);
         return message;
     }
 
