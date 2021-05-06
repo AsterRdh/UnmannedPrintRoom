@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -78,8 +79,8 @@ public class BillsController {
         String color=(String)requestBody.get("color");
         String name=(String)requestBody.get("file");
         String user=(String)requestBody.get("user");
-
-
+        String fileUrl=(String)requestBody.get("fileUrl");
+        int printCount=(Integer)requestBody.get("printCount");
 
         Map chargingRoleTree = billService.getChargingRoleTree();
         BigDecimal price = (BigDecimal)((Map) chargingRoleTree.get(size)).get(color);
@@ -89,6 +90,15 @@ public class BillsController {
         PrBills bill=new PrBills();
         bill.newPrBills(name,total,size+" 共"+count+"页 " + color,"","2",new Date(), 0,printer,user);
         PrBills prBills = billService.addBill(bill);
+        try {
+            WebSocketServer.sendMessage("newTask "+fileUrl+" "+printCount,"1");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Message<Object> success = Message.fail("500");
+            success.setObj("无法连接打印机");
+            return success;
+        }
+
         if (prBills==null){
             Message<Object> success = Message.fail("500");
             success.setObj("余额不足");

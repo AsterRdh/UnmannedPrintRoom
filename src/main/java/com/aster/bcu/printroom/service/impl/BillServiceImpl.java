@@ -50,7 +50,6 @@ public class BillServiceImpl implements IBillService {
 
     @Override
     public PrBills addBill( PrBills bill) {
-
         PrUsers users = usersDao.selectByPrimaryKey(Integer.parseInt(bill.getPkUser()));
         BigDecimal subtract = users.getMoney().subtract(new BigDecimal(bill.getAmount()));
         if(subtract.doubleValue()>0){
