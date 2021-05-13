@@ -16,7 +16,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -30,9 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests()
 //                .antMatchers("/res/**").permitAll().and().authorizeRequests().and().formLogin();
         http.formLogin()
-                    .loginPage("http://localhost:8001")
+                    .loginPage("http://localhost:8000")
                     .loginProcessingUrl("/login/p")
                     .usernameParameter("username")
                     .passwordParameter("password")
@@ -88,11 +88,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 SecurityContextHolder.getContext()
                                 );
                         String sessionId = httpServletRequest.getSession().getId();
-
-                        String s = "{\"status\":\"success\",\"msg\":" + sessionId + "}";
-                        Map<String,String> map=new HashMap<>();
+                        User principal = (User) authentication.getPrincipal();
+                        List<GrantedAuthority> list=new ArrayList<>(principal.getAuthorities());
+                        Map<String,Object> map=new HashMap<>();
                         map.put("status","success");
-                        map.put("msg",sessionId);
+
+                        Map<String,String> smgMap=new HashMap<>();
+                        smgMap.put("JSESSIONID",sessionId);
+                        smgMap.put("userName",principal.getUsername());
+                        smgMap.put("userId","");
+                        smgMap.put("userRule", list.get(0).getAuthority());
+
+                        map.put("msg",smgMap);
                         out.write(new Gson().toJson(map));
                         out.flush();
                         out.close();

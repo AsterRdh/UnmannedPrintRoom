@@ -62,8 +62,10 @@ public class WebSocketServer {
     public void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
     }
+
     public static void sendMessage(String message,String printerId) throws IOException {
         Session session = taskMap.get(printerId);
+        if(session==null) throw new IOException("打印机离线");
         session.getBasicRemote().sendText(message);
     }
     public static void sendInfo(String message) throws IOException {
@@ -109,6 +111,13 @@ public class WebSocketServer {
 
                 break;
             case "finish":
+
+                break;
+            case "hi":
+
+                break;
+            case "error":
+
                 break;
         }
         //群发消息

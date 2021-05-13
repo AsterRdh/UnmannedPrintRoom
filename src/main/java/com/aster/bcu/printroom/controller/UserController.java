@@ -36,8 +36,6 @@ public class UserController {
 
     @GetMapping("/userInfo")
     public Message getAllPrinterLocation(String id){
-
-
         Map userInfo = userCenterService.getUserInfo(Integer.parseInt(id));
         Message<Object> success = Message.success("");
         success.setObj(userInfo);

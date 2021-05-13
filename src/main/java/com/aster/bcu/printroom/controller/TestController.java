@@ -1,8 +1,10 @@
 package com.aster.bcu.printroom.controller;
 
 import com.aster.bcu.printroom.entity.Message;
+import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -13,9 +15,10 @@ public class TestController {
         return "Hello Security";
     }
     @PostMapping("/test")
-    public Message test(@RequestBody Map data){
-        Message message=Message.success("200");
-        message.setObj(data);
-        return message;
+    public Map test(@RequestBody Map data){
+        Map<String, String> response = new HashMap<>();
+        response.put("success", "true");
+        response.put("data", new Gson().toJson(data));
+        return response;
     }
 }

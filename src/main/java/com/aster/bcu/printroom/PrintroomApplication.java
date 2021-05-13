@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication()
 //@ComponentScan(basePackages = {"com.aster.bcu.printroom.mapper",
 //        "com.aster.bcu.printroom.controller",
@@ -19,6 +21,7 @@ public class PrintroomApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PrintroomApplication.class, args);
+
     }
 
 }

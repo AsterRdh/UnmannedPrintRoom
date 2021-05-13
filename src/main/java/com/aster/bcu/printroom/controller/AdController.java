@@ -39,7 +39,7 @@ public class AdController {
             Map map=new HashMap();
             map.put("key",ad.getPkAd());
             map.put("name",ad.getName());
-            map.put("src","http://localhost:8080/PrintRoom/resource/"+ad.getSrc());
+            map.put("src","http://39.107.232.66:8080/PrintRoom/resource/"+ad.getSrc());
             map.put("startDate",f.format(ad.getStartDate()));
             map.put("endDate",f.format(ad.getEndDate()));
             map.put("tags",new String[]{getState(ad.getState())});

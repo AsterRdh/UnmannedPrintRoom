@@ -6,7 +6,7 @@ DEV:
   mysql-url: jdbc:mysql://2ze41u391c154ve0omo.mysql.rds.aliyuncs.com:3306/printroom?useSSL=false
   mysql-username: root
   mysql-password: AsterRoot2020
-  file-path: F:/MyCloudMusic-file
+  file-path: C:/MyCloudMusic-file
   serverUrl: http://localhost:8080/PrintRoom
 
 #  file-path: C:/PrintFiles/docs
